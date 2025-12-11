@@ -1,10 +1,13 @@
 import { Router } from "express";
-import { CreateUserControlller } from "./controllers/user/CreateUserController";
-import { validateSchema } from "./middlewares/validateSchema";
-import { createUserSchema } from "./schemas/userSchema";
+import { CreateUserController } from "./controllers/user/CreateUserController";
+import { validateSchema, } from "./middlewares/validateSchema";
+import { authUserSchema, createUserSchema } from "./schemas/userSchema";
+import { AuthUserController } from "./controllers/user/AuthUserController";
 
 const router = Router();
+// rotas users
+router.post("/users", validateSchema(createUserSchema), new CreateUserController().handle);
 
-router.post("/users", validateSchema(createUserSchema) , new CreateUserControlller().handle)
+router.post("/session", validateSchema(authUserSchema), new AuthUserController().handle)
 
 export {router}
