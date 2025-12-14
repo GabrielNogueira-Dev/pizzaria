@@ -6,6 +6,8 @@ import { AuthUserController } from "./controllers/user/AuthUserController";
 import { DetailUserController } from "./controllers/user/DetailUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
+import { isAdmin } from "./middlewares/isAdmin";
+import { createCategorySchema } from "./schemas/categorySchema";
 
 const router = Router();
 // Rotas users
@@ -15,6 +17,6 @@ router.post("/session", validateSchema(authUserSchema), new AuthUserController()
 
 router.get("/me", isAuthenticated ,new DetailUserController().handle)
 
-// Rotas Categories
-router.post("/category",isAuthenticated, new CreateCategoryController().handle)
+// Rotas Categories       autenticacao    role=ADMIN       Zod com name
+router.post("/category", isAuthenticated , isAdmin , validateSchema(createCategorySchema), new CreateCategoryController().handle)
 export {router}
