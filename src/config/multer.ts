@@ -1,4 +1,4 @@
-import multer, { Multer } from "multer";
+import multer from "multer";
 
 // Usar memorystorage para manter o arquivo em memoria e enviar diretamente pro cloudinary..
 
