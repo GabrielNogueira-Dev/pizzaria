@@ -13,7 +13,7 @@ if(!req.file){
 
         const product = await createProductService.execute({
             name:name,
-            price:price,
+            price:parseInt(price),
             description:description,
             category_id:category_id,
             imageBuffer: req.file.buffer,

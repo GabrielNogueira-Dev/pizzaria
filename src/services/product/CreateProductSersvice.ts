@@ -1,7 +1,6 @@
 import { Readable } from "node:stream";
 import prismaclient from "../../prisma";
 import cloudinary from "../../config/cloudinary"
-import { rejects } from "node:assert";
 
 interface ProductRequest{
     name:string;
@@ -45,12 +44,33 @@ try{
      bufferStream.pipe(uploadStream)
 
 })
-console.log(result)
+
+bannerUrl = result.secure_url
 
 }catch(error){
     console.log(error)
     throw new Error("Erro ao fazer upload da imagem")
 }
+
+const product = await prismaclient.product.create({
+    data:{
+        name:name,
+        price:price,
+        description:description,
+        banner:bannerUrl,
+        category_id:category_id
+    },
+    select:{
+        id:true,
+        name:true,
+        price:true,
+        description:true,
+        category_id:true,
+        banner:true,
+        createdAt:true,
+    }
+})
+return product
 
 //SALVAR A URL DA IMAGEM E OS DADOS NO BANCO COMO UM NOVO PRODUTO
 
