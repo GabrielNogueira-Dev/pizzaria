@@ -3,11 +3,11 @@ import multer from "multer";
 // Usar memorystorage para manter o arquivo em memoria e enviar diretamente pro cloudinary..
 
 export default {
-    Storage: multer.memoryStorage(),
+    storage: multer.memoryStorage(),
     limits:{
         fileSize: 4* 1024 * 1024 // 4Mb
     },
-    fileFilter: (req:any, file: Express.Multer.File, cb: any) => {
+    fileFilter: (_req:any, file: Express.Multer.File, cb: any) => {
         const allowerdMimes = ["image/jpeg", "image/jpg", "image/png"]
     
         if(allowerdMimes.includes(file.mimetype)) {

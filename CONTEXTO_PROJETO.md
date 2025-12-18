@@ -21,6 +21,18 @@ Sistema backend de gerenciamento de pizzaria desenvolvido em Node.js com TypeScr
 
 ---
 
+## ⚡ Resumo Rápido (Contexto)
+
+- Linguagem: TypeScript
+- ORM: Prisma (`prisma/schema.prisma`)
+- Uploads locais: `multer` (config em `config/multer.ts`) — para desenvolvimento use `diskStorage` em `uploads/`.
+- Uploads em nuvem: `cloudinary` (opcional, config em `config/cloudinary.ts`).
+- Autenticação: JWT (`JWT_SECRET`), middleware `isAuthenticated` popula `req.user` (use `req.user.sub` como user_id).
+- Estrutura sugerida: controllers -> services -> prisma; configs compartilhadas em `config/` (na raiz do backend).
+
+> Observação: ajuste imports relativos em `src` para apontar para `../config/*` se a pasta `config` estiver na raiz do backend.
+
+
 ## 🏗️ Arquitetura
 
 O projeto segue o padrão **MVC + Service Layer**, com a seguinte estrutura:
