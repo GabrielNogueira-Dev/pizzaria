@@ -7,9 +7,9 @@ class ListProductController{
             const disabled = req.query.disabled as string;
             const listProductService = new ListProductService();
             
-            const listProduct = await listProductService.execute({ disabled });
+            const Products = await listProductService.execute({ disabled });
             
-            return res.json(listProduct);
+            return res.json(Products);
         }catch(err:any){
             return res.status(400).json({ error: err.message || "Erro ao listar produtos" });
         }

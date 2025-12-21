@@ -14,6 +14,7 @@ import { ListCategoryController } from "./controllers/category/ListCategoryContr
 import { CreateProductController } from "./controllers/product/CreateProductController";
 import { createProductSchema, listProductSchema } from "./schemas/productSchema";
 import { ListProductController } from "./controllers/product/ListProductController";
+import { DeleteProductController } from "./controllers/product/DeleteProductController";
 
 
 const router = Router();
@@ -36,5 +37,7 @@ router.get("/category",isAuthenticated, new ListCategoryController().handle)
 router.post("/product",isAuthenticated,isAdmin,upload.single("file"),validateSchema(createProductSchema), new CreateProductController().handle)
 
 router.get("/products",isAuthenticated,validateSchema(listProductSchema),new ListProductController().handle)
+
+router.delete("/product",isAuthenticated,isAdmin, new DeleteProductController().handle)
 
 export {router}

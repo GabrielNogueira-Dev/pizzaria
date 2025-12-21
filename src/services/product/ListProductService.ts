@@ -9,7 +9,9 @@ class  ListProductService{
 try{
     // Se disabled não é passado, lista TODOS; se passado, filtra por true/false
     const listProduct = await prismaclient.product.findMany({
-        where: disabled ? { disabled: disabled === "true" } : {},
+        where:{ 
+            disabled : disabled === "true" ? true : false
+        },// where :{ disabled === "true" : {}}
         select:{
             id: true,
             name:true,
