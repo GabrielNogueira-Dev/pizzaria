@@ -12,9 +12,10 @@ import { isAdmin } from "./middlewares/isAdmin";
 import { createCategorySchema } from "./schemas/categorySchema";
 import { ListCategoryController } from "./controllers/category/ListCategoryController";
 import { CreateProductController } from "./controllers/product/CreateProductController";
-import { createProductSchema, listProductSchema } from "./schemas/productSchema";
+import { createProductSchema, listProductbyCategorySchema, listProductSchema } from "./schemas/productSchema";
 import { ListProductController } from "./controllers/product/ListProductController";
 import { DeleteProductController } from "./controllers/product/DeleteProductController";
+import { ListProductsByCategoryController } from "./controllers/product/ListProductsByCategoryController";
 
 
 const router = Router();
@@ -39,5 +40,7 @@ router.post("/product",isAuthenticated,isAdmin,upload.single("file"),validateSch
 router.get("/products",isAuthenticated,validateSchema(listProductSchema),new ListProductController().handle)
 
 router.delete("/product",isAuthenticated,isAdmin, new DeleteProductController().handle)
+
+router.get("/category/product",isAuthenticated,validateSchema(listProductbyCategorySchema), new ListProductsByCategoryController().handle)
 
 export {router}
