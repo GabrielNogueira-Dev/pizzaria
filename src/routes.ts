@@ -16,6 +16,9 @@ import { createProductSchema, listProductbyCategorySchema, listProductSchema } f
 import { ListProductController } from "./controllers/product/ListProductController";
 import { DeleteProductController } from "./controllers/product/DeleteProductController";
 import { ListProductsByCategoryController } from "./controllers/product/ListProductsByCategoryController";
+import { createOrderSchema } from "./schemas/order.Schema";
+import { CreateOrderController } from "./controllers/order/CreateOrderController";
+import { ListOrderController } from "./controllers/order/ListOrderController";
 
 
 const router = Router();
@@ -42,5 +45,10 @@ router.get("/products",isAuthenticated,validateSchema(listProductSchema),new Lis
 router.delete("/product",isAuthenticated,isAdmin, new DeleteProductController().handle)
 
 router.get("/category/product",isAuthenticated,validateSchema(listProductbyCategorySchema), new ListProductsByCategoryController().handle)
+
+//Rotas Order
+router.post("/order",isAuthenticated,validateSchema(createOrderSchema), new CreateOrderController().handle)
+
+router.get("/orders",isAuthenticated,new ListOrderController().handle)
 
 export {router}
