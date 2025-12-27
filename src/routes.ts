@@ -16,11 +16,12 @@ import { createProductSchema, listProductbyCategorySchema, listProductSchema } f
 import { ListProductController } from "./controllers/product/ListProductController";
 import { DeleteProductController } from "./controllers/product/DeleteProductController";
 import { ListProductsByCategoryController } from "./controllers/product/ListProductsByCategoryController";
-import { addItemSchema, createOrderSchema, removeItemSchema } from "./schemas/order.Schema";
+import { addItemSchema, createOrderSchema, orderDetailSchema, removeItemSchema } from "./schemas/order.Schema";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
 import { ListOrderController } from "./controllers/order/ListOrderController";
 import { AddItemController } from "./controllers/order/AddItemOrderController";
 import { RemoveItemController } from "./controllers/order/RemoveItemController";
+import { DetailOrderController } from "./controllers/order/DetailOrderController";
 
 
 const router = Router();
@@ -56,5 +57,8 @@ router.get("/orders",isAuthenticated,new ListOrderController().handle)
 router.post("/order/add", isAuthenticated, validateSchema(addItemSchema) ,new AddItemController().handle)
 
 router.delete("/order/remove", isAuthenticated,validateSchema(removeItemSchema) , new RemoveItemController().handle)
+
+router.get("/order/detail",isAuthenticated,validateSchema(orderDetailSchema), new DetailOrderController().handle)
+
 
 export {router}
