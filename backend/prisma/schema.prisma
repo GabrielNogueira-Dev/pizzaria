@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role{
+  STAFF
+  ADMIN
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String
+  password String
+  role Role @default(STAFF)
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Category{
+  id String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  products Product[]
+
+@@map("categories")
+}
+
+model Product{
+  id String @id @default(uuid())
+  name String
+  price Int
+  description String
+  banner String
+  disabled Boolean @default(false)
+
+  category_id String
+  category Category @relation(fields:[category_id], references:[id], onDelete: Cascade)
+  
+  items Item[]
+
+  createdAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+@@map("products")
+}
+
+model Order{
+  id String @id @default(uuid())
+  table Int
+  status Boolean @default(false) // false =peendente e true = pronto
+  draft Boolean @default(true) // false ainda rascunho e true foi enviado a cozinha
+  name String?
+
+  items Item[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+@@map("oders")
+}
+
+model Item{
+  id String @id @default(uuid())
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order_id String
+  order Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
+
+  product_id String
+  product Product @relation(fields: [product_id],references: [id], onDelete: Cascade)
+
+  @@map("items")
+}
+
+
+
