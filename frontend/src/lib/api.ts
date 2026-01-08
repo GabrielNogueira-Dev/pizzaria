@@ -38,9 +38,9 @@ const response = await fetch(`${API_URL}${endpoint}`, {
 
 if(!response.ok){
     const error = await response.json().catch(()=> ({
-        error: "Error HTTP" + response.status
+        error: `Error HTTP ${response.status}`
     }))
-    throw new Error(error.error || "Error dna Requisição")
+    throw new Error(error.error || "Error na Requisição")
 }
 
 

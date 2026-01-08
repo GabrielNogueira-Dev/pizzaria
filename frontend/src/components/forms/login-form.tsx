@@ -6,12 +6,12 @@ import { Card,CardAction, CardContent,CardDescription,CardFooter,CardHeader,Card
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import Link from "next/link"
-import { registerAction } from "@/actions/auth"
+import { loginAction } from "@/actions/auth"
 import { useRouter } from "next/navigation"
 
 
-export function RegisterForm(){
-    const [state, formAction, isPending] = useActionState(registerAction, null)
+export function LoginForm(){
+    const [state, formAction, isPending] = useActionState(loginAction, null)
     const router = useRouter()
 
     useEffect(()=>{
@@ -26,13 +26,7 @@ export function RegisterForm(){
         </CardHeader>
         <CardContent>
             <form className=" space-y-4" action={formAction}>
-                <div>
-                    <Label htmlFor="name" className="text-white mb-2">Nome</Label>
-                    <Input type="text" id="name" name="name" placeholder="Digite seu nome"
-                           required minLength = {3}  className="text-white bg-app-card border border-app-border"
-                    />
-                </div>
-
+             
                  <div>
                     <Label htmlFor="email" className="text-white mb-2">Email</Label>
                     <Input type="email" id="email" name="email" placeholder="Digite seu e-mail"
@@ -43,18 +37,18 @@ export function RegisterForm(){
                  <div>
                     <Label htmlFor="password" className="text-white mb-2">Senha</Label>
                     <Input type="password" id="password" name="password" placeholder="Digite sua senha"
-                           required minLength = {6}  className="text-white bg-app-card border border-app-border"
+                           required minLength = {3}  className="text-white bg-app-card border border-app-border"
                     />
                 </div>
 
-                <Button type="submit" className="w-full bg-brand-primary text-white hover:bg-brand-primary">{isPending ? "Criando conta.." : "Criar conta"} </Button>
-                     {state?.error && (
+                <Button type="submit" className="w-full bg-brand-primary text-white hover:bg-brand-primary">{isPending ? "Acessando conta.." : "Acessar"} </Button>
+                 {state?.error && (
                     <div className="bg-red-500 text-white p-3 rounded text-sm">
                         {state.error}
                     </div>
                 )}
-                <p className="text-center text-sm text-gray-100">Já possui conta?
-                 <Link className="text-brand-primary font-semibold" href={"/login"}>Faça o login</Link></p>
+                <p className="text-center text-sm text-gray-100">Ainda não possui conta?
+                 <Link className="text-brand-primary font-semibold" href={"/register"}> Crie uma conta</Link></p>
             
             </form>
         </CardContent>
