@@ -54,7 +54,7 @@ export function RegisterForm(){
                     </div>
                 )}
                 <p className="text-center text-sm text-gray-100">Já possui conta?
-                 <Link className="text-brand-primary font-semibold" href={"/login"}>Faça o login</Link></p>
+                 <Link className="text-brand-primary font-semibold" href={"/login"}> Faça o login</Link></p>
             
             </form>
         </CardContent>

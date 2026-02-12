@@ -6,7 +6,8 @@ import {
   DialogContent,DialogHeader,
   DialogTitle,DialogFooter,} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
+import { finishOrderAction } from "@/actions/order";
+import { useRouter } from "next/navigation";
 interface OrderModalProps {
   orderId: string | null;
   onClose: () => Promise<void>;
@@ -16,6 +17,8 @@ interface OrderModalProps {
 export function OrderModal({ onClose, orderId, token }: OrderModalProps) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter()
 
   const fetchOrder = async () => {
     if (!orderId) {
@@ -36,8 +39,8 @@ export function OrderModal({ onClose, orderId, token }: OrderModalProps) {
 
       // RETORNO DETALHE DA ORDER
       setOrder(response);
-
       setLoading(false);
+
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -52,6 +55,16 @@ export function OrderModal({ onClose, orderId, token }: OrderModalProps) {
     loadOrders();
   }, [orderId]);
 
+const handleFinishOrder = async ()=>{
+  const response = await finishOrderAction(orderId!)
+  if(!response.success){
+    return alert(response.error)
+  }
+  if(response.success){
+    onClose()
+    router.refresh()
+  }
+}
 
   return (
     <Dialog open={orderId !== null} onOpenChange={() => onClose()}>
@@ -163,6 +176,7 @@ export function OrderModal({ onClose, orderId, token }: OrderModalProps) {
           <Button
             className="flex-1 bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold"
             disabled={loading}
+            onClick={handleFinishOrder}
           >
             Finalizar pedido
           </Button>

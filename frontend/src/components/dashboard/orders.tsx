@@ -57,8 +57,8 @@ export function Orders({token} :OrdersProps){
          <div className="space-y-4 sm:space-y-6">
                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                  <div>
-                   <h1 className="text-2xl sm:text-3xl font-bold text-white">pag categoria</h1>
-                   <p className="text-sm sm:text-base mt-1">Organize suas categorias</p>
+                   <h1 className="text-2xl sm:text-3xl font-bold text-white">Ordens de pedidos</h1>
+                   <p className="text-sm sm:text-base mt-1">Organize suas ordens</p>
                  </div>
        
                  <Button className="bg-brand-primary text-white hover:bg-brand-primary"
@@ -80,7 +80,7 @@ export function Orders({token} :OrdersProps){
                 {orders.map((order) => (
                   <Card key={order.id} className="bg-app-card border-app-border text-white">
                     <CardHeader>
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center justify-between gap-2 ">
                         <CardTitle className="text-lg lg:text-xl font-bold">
                            Mesa {order.table}
                         </CardTitle>
@@ -94,7 +94,7 @@ export function Orders({token} :OrdersProps){
                         <div>
                             {order.items && order.items.length > 0 && (
                                 <div className="space-y-1">
-                                    {order.items.slice(0,2).map((item)=> (
+                                    {order.items.slice(0,3).map((item)=> (
                                         <p className="text-xs sm:text-sm text-gray-300 truncate" key={item.id}>
                                             {item.amount}x - {item.product.name}
                                         </p>
