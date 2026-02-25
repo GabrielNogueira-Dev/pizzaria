@@ -1,21 +1,47 @@
-import { Button } from "@/components/button";
-import Input from "@/components/input";
-import { colors, fontSize, spacing } from "@/constants/theme";
 import {
+  Alert,
   KeyboardAvoidingView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 
+import { Button } from "@/components/button";
+import Input from "@/components/input";
+import { colors, fontSize, spacing } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const { signIn } = useAuth();
+
+  async function handleLogin() {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Atenção", "Preencha todos os campos!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await signIn(email, password);
+      router.replace("/(authenticated)/dashboard");
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Error", "Error ao fazer Login");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={"padding"}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
@@ -32,6 +58,9 @@ export default function Login() {
             label="Email"
             placeholder="Digite seu email"
             placeholderTextColor={colors.gray}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
           />
 
           <Input
@@ -39,9 +68,16 @@ export default function Login() {
             placeholder="Digite sua senha"
             placeholderTextColor={colors.gray}
             secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
           />
 
-          <Button title="Acessar" />
+          <Button
+            title="Acessar"
+            variant="primary"
+            loading={loading}
+            onPress={handleLogin}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
