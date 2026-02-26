@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
 import { LoginResponse, User } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -12,14 +12,39 @@ interface AuthContextData {
   signed: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [signed, setSigned] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      await loadStorageData();
+    }
+    loadData();
+  }, []);
+
+  async function loadStorageData() {
+    try {
+      setLoading(true);
+
+      const storedToken = await AsyncStorage.getItem("@token:pizzaria");
+      const storedUser = await AsyncStorage.getItem("@user:pizzaria");
+
+      if (storedToken && storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      throw new Error("Falha ao carregar os detalhes do USER");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function signIn(email: string, password: string) {
     try {
@@ -34,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       await AsyncStorage.setItem("@token:pizzaria", token);
       await AsyncStorage.setItem("@user:pizzaria", JSON.stringify(userData));
-      console.log(userData);
+
       setUser(userData);
       setSigned(true);
     } catch (error: any) {
@@ -49,13 +74,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signOut() {
+    await AsyncStorage.multiRemove(["@token:pizzaria", "@user:pizzaria"]);
+    setUser(null);
+  }
+
   return (
     <AuthContext
       value={{
-        signed,
+        signed: !!user, // coloquei :!!user depois, e isto faz com que se tiver user torna signed true senao torna false
         loading,
         signIn,
         user,
+        signOut,
       }}
     >
       {children}
