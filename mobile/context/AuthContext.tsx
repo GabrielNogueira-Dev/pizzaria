@@ -61,7 +61,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       await AsyncStorage.setItem("@user:pizzaria", JSON.stringify(userData));
 
       setUser(userData);
-      setSigned(true);
     } catch (error: any) {
       // Se a API retornar erro, lançamos para o Login capturar
       if (error.response?.data?.error) {
