@@ -2,8 +2,13 @@ import { Button } from "@/components/button";
 import Input from "@/components/input";
 import { borderRadius, colors, fontSize, spacing } from "@/constants/theme";
 import { useAuth } from "@/context/AuthContext";
+import { api } from "@/services/api";
+import { Order } from "@/types";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -17,6 +22,39 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function Dashboard() {
   const { signOut } = useAuth();
   const insets = useSafeAreaInsets();
+
+  const [tableNumber, setTableNumber] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  async function handleOpenTable() {
+    if (!tableNumber) {
+      Alert.alert("Atenção, digite um número válido!");
+      return;
+    }
+    const inteiroNumber = parseInt(tableNumber);
+    if (isNaN(inteiroNumber) || inteiroNumber <= 0) {
+      Alert.alert("Atenção, digite um número válido!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await api.post<Order>("/order", {
+        table: inteiroNumber,
+      });
+      router.push({
+        pathname: "/(authenticated)/order",
+        params: { table: response.data.table, order_id: response.data.id },
+      });
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Falha ao abrir mesa, tente mais tarde..");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -45,12 +83,15 @@ export default function Dashboard() {
 
             <Text style={styles.title}>Novo pedido</Text>
             <Input
+              value={tableNumber}
+              onChangeText={setTableNumber}
+              keyboardType="numeric"
               placeholder="Número da mesa.."
               style={styles.input}
               placeholderTextColor={colors.gray}
             />
 
-            <Button title="Abrir  mesa" onPress={() => {}} />
+            <Button title="Abrir  mesa" onPress={handleOpenTable} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
