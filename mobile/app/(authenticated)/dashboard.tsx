@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Dashboard() {
   const { signOut } = useAuth();
-  const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets(); //da margin top sozinho, olha o return la p revisar
 
   const [tableNumber, setTableNumber] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,8 +46,12 @@ export default function Dashboard() {
       });
       router.push({
         pathname: "/(authenticated)/order",
-        params: { table: response.data.table, order_id: response.data.id },
+        params: {
+          table: response.data.table.toString(),
+          order_id: response.data.id,
+        },
       });
+      setTableNumber("");
     } catch (err) {
       console.log(err);
       Alert.alert("Falha ao abrir mesa, tente mais tarde..");
