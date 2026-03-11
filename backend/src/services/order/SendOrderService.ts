@@ -12,7 +12,7 @@ class SendOrderService {
             const order = await prismaclient.order.findFirst({
             where:{
                 id: order_id,
-                name: name
+                
             }
         })
             if(!order){
@@ -21,10 +21,12 @@ class SendOrderService {
 
             const updatedOrder = await prismaclient.order.update({
                 where:{
-                    id:order_id
+                    id:order_id,
+                
                 },
                 data:{
                     draft: false,
+                    name:name
                 },
                 select:{
                     id:true,
