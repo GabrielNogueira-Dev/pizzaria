@@ -23,6 +23,8 @@ interface SelectProps {
   placeholder?: string;
 }
 
+//LOGICA COM ORDER.tsx E SELECT.tsx
+
 export function Select({
   onValueChange,
   options,
@@ -101,6 +103,7 @@ export function Select({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    paddingBottom: 8,
   },
   label: {
     color: colors.primary,
