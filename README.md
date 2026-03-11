@@ -22,8 +22,7 @@ Pedidos WEB
 Mobile
 
 Login 
-<img width="381" height="842" alt="login mobile" src="https://github.com/user-attachments/assets/61294ff4-9837-415d-9517-e2678b6218c2" />
- 
+
   Criacao de mesa
 <img width="373" height="839" alt="criacao mesa mobile" src="https://github.com/user-attachments/assets/5d35ee18-a8e8-4f19-a33e-fbc616fa30cf" />
 
