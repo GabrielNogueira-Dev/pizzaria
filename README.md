@@ -3,17 +3,21 @@ Login WEB
 Cadastro WEB
 <img width="1902" height="905" alt="cadastro web" src="https://github.com/user-attachments/assets/f394cafd-c358-4ee5-a087-167d62c6c22d" />
 
+
 Novo Produto WEB
 <img width="1905" height="906" alt="produtos web" src="https://github.com/user-attachments/assets/638619ae-f547-47f3-a89f-7b87745e2bca" />
 <img width="1904" height="908" alt="novo produto web" src="https://github.com/user-attachments/assets/4c19a378-875b-409f-9d32-d99cd4180689" />
+
 
 
 Nova categoria WEB
 <img width="1907" height="906" alt="nova categoria web" src="https://github.com/user-attachments/assets/baa82251-7e56-4a42-b028-2e080c9b7046" />
 <img width="1901" height="900" alt="categorias web" src="https://github.com/user-attachments/assets/a2c8df52-2db5-4647-8319-1f9448641ce6" />
 
+
 Pedidos WEB
 <img width="1904" height="907" alt="pedidos web" src="https://github.com/user-attachments/assets/61defae2-2cdd-477c-88d0-693e6e3275e6" />
+<img width="1903" height="901" alt="detalhes do pedido web" src="https://github.com/user-attachments/assets/62b638e8-5d22-4b6d-a278-e0e1a6b1cfd6" />
 
 Mobile
 Login 
